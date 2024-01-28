@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            moth404
+        </title>
+        <link rel="icon" type="image/x-icon" href="https://cdn.discordapp.com/attachments/1006249405013307413/1200986377723052092/3.png?ex=65c82cb9&is=65b5b7b9&hm=961f011e0d3b7e4f1f2cf7fc3d0ab35026779cc25ff8986ae31489cc6bb34fb1&">
+        <!--
+            oh hey, you decided to inspect my code eh?
+            good for you, but you wont find anything here.
+
+            ...
+
+            fine, here's a hint, the h3 is polish
+        -->
+    </head>
+    <body style="background-color: #0e0e10; text-align: center; color: antiquewhite; font-size: 170%;">
+        <br><br><br>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.4.1/dist/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+        <img src="https://media.discordapp.net/attachments/1006249405013307413/1200833276038877304/2.png?ex=65c79e23&is=65b52923&hm=23722d60bb791a10c4a0714d4ed5779939d92cbd8c192157098ecfc10735a656&=&format=webp&quality=lossless&width=1138&height=663" style="width: 30%;"><br><br><br><br>
+        <h3>pierwsza czerwona zagadka jest pierwszym kluczem</h3>
+
+        <label for="key">Enter Key:</label><br>
+        <input type="text" id="key" placeholder="XXXXXXXXXX-000" style="color: #0e0e10;"><br><br>
+
+        <label for="inputText">Enter Text:</label><br>
+        <textarea id="inputText" rows="4" cols="50" style="color: #0e0e10;"></textarea><br>
+      
+        <br><br>
+      
+        <button onclick="encrypt()" style="color: #0e0e10;">Encrypt</button>
+        <button onclick="decrypt()" style="color: #0e0e10;">Decrypt</button>
+      
+        <h3>Result:</h3>
+        <div id="result"></div>
+      
+        <script>
+          function encrypt() {
+            var inputText = document.getElementById('inputText').value;
+            var key = document.getElementById('key').value;
+            
+            var encryptedText = simpleEncrypt(inputText, key);
+            document.getElementById('result').innerHTML = 'Encrypted: ' + encryptedText + '<br><br><br>';
+          }
+
+            function decrypt() {
+            var encryptedText = document.getElementById('inputText').value;
+            var key = document.getElementById('key').value;
+
+            var decryptedText = simpleDecrypt(encryptedText, key);
+            document.getElementById('result').innerHTML = 'Decrypted: ' + decryptedText + '<br><br><br>';
+          }
+
+          function simpleEncrypt(text, key) {
+            var result = '';
+            for (var i = 0; i < text.length; i++) {
+              var charCode = text.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+              result += String.fromCharCode(charCode);
+            }
+            return btoa(result); 
+          }
+      
+          function simpleDecrypt(encryptedText, key) {
+            var text = atob(encryptedText); 
+            var result = '';
+            for (var i = 0; i < text.length; i++) {
+              var charCode = text.charCodeAt(i) ^ key.charCodeAt(i % key.length);
+              result += String.fromCharCode(charCode);
+            }
+            return result;
+          }
+        </script>
+      
+      </body>
+    
+</html>
