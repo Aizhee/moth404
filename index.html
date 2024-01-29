@@ -16,6 +16,38 @@
             fine, here's a hint, the h3 is polish
         -->
         <style>
+          .splash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #000000 !important;
+            width: 100%;
+            height: 100vh; /* Set height to 100vh to cover the entire screen vertically */
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            transition: opacity 2s;
+        }
+
+        .splash video {
+          width: 80%; /* Adjust the width as needed */
+          display: inline-block;
+        }
+        .splash.fade {
+          opacity: 0;
+        }
+        
+        .splash.hide {
+          visibility: hidden;
+        }
+
+
+          .cursors{
+            cursor:pointer;
+          }
           p {
               text-align: left;
               display: block;
@@ -129,11 +161,17 @@
     </head>
     <body class="w3-display-container w3-content w3-wide" style="max-width:1500px;">
       <br><br><br>
+
+      <div class="splash" id="splash">
+        <video autoplay muted plays-inline style="size: 5%; text-align: center;" src="https://cdn.discordapp.com/attachments/1006249405013307413/1201474908237074482/again.mp4?ex=65c9f3b4&is=65b77eb4&hm=06d81a997d5e28c97db5c5e759cf1f7c597bdf36ea2ed487e06c0549c13244bc&"></video>
+      </div>
+
+      <div class="main-content">
       <img
           src="https://media.discordapp.net/attachments/1006249405013307413/1200833276038877304/2.png?ex=65c79e23&is=65b52923&hm=23722d60bb791a10c4a0714d4ed5779939d92cbd8c192157098ecfc10735a656&=&format=webp&quality=lossless&width=1138&height=663">
       <br><br><br><br>
       <div class="w3-content w3-padding" style="max-width:1564px">
-      <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16" >pierwsza czerwona zagadka jest pierwszym kluczem</h3><br>
+      <h3 translate="no" class="w3-border-bottom w3-border-light-grey w3-padding-16" >pierwsza czerwona zagadka jest pierwszym kluczem</h3><br>
   
       <p>Enter Key:</p>
       <input class="w3-input w3-border w3-row-padding" type="text" id="key" placeholder="XXXXXXXXXX-000">
@@ -146,17 +184,29 @@
       <button class="w3-button w3-light-grey w3-section "  onclick="decrypt()">Decrypt</button>
 
       <h3 class=" w3-border-light-grey w3-padding-16">Result:</h3>
-      <div id="result" class="w3-padding" ></div><div id="copy"></div><br><br>
+      <div id="result" class="w3-padding" ></div><div id="copy" class="cursors"></div><br><br>
+    </div>
     </div>
         <script>
           
+          setTimeout(() => {
+          document.getElementById('splash').classList.toggle('fade'); }, 1600);
           
+          setTimeout(() => {
+          document.getElementById('splash').classList.toggle('hide'); }, 3000);
+
           function decrypt() {
             var encryptedText = document.getElementById('inputText').value;
             var key = document.getElementById('key').value;
 
             var decryptedText = simpleDecrypt(encryptedText, key);
-            document.getElementById('result').innerHTML = decryptedText;
+            var resultElement = document.getElementById('result');
+    
+            // Apply CSS styling to control text wrapping and overflow
+            resultElement.style.wordWrap = 'break-word';
+            resultElement.style.overflow = 'auto';
+            
+            resultElement.innerHTML = decryptedText
             document.getElementById('copy').innerHTML = 
                 '<i style="font-size:16px" onclick="copyToClipboard()" class="material-icons">&#xe14d;</i>';    
         }
@@ -171,7 +221,12 @@
             tempTextarea.setSelectionRange(0, decryptedText.length);
             document.execCommand('copy');
             document.body.removeChild(tempTextarea);
-            alert('Text copied to clipboard!');
+            document.getElementById('copy').innerHTML = 
+                '<i style="font-size:16px" onclick="copyToClipboard()" class="material-icons">&#xe5ca;</i>';
+            setTimeout(function () {
+              document.getElementById('copy').innerHTML = 
+                '<i style="font-size:16px" onclick="copyToClipboard()" class="material-icons">&#xe14d;</i>';
+            }, 1000);    
         }
       
           function simpleDecrypt(encryptedText, key) {
@@ -188,7 +243,7 @@
       </body>
       <footer>
         
-        <p style="text-align: center; font-size: 1em 5px;">&copy; Copyright 2024 The Publicators</p>
+        <p style="text-align: center; font-size: 1em 5px;">&copy; Copyright 2024 <a href="https://aizhee.github.io/publicators/">The Publicators</a></p>
       </footer>
     
 </html>
